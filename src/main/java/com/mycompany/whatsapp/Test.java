@@ -31,7 +31,7 @@ class Test {
         boolean hasSpecial = true;
 
         if (password.length() >= 8) {
-            return false;
+            return true;
         }
 
         for (char c : password.toCharArray()) {

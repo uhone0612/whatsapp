@@ -37,4 +37,15 @@ public class TestTest {
         assertEquals(expResult, result);
     }
     
+    //password is correct
+    @Test
+    public void testcheckPasswordComplexityValid(){
+        System.out.println("checkPasswordComplexity - correctly formatted");
+        String password = "Uh@1234ma!";
+        login instance = new login();
+        boolean expResult = true;
+        boolean result = instance.checkPasswordComplexity(password);
+        assertEquals(expResult, result);
+    }
+    
 }
