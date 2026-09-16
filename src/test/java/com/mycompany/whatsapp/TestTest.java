@@ -60,7 +60,7 @@ public class TestTest {
     
     @Test
     public void testcheckCellPhoneNumberValid(){
-        System.out.println("checkPhoneNumber - incorrectly formatted");
+        System.out.println("checkPhoneNumber - correctly formatted");
         String cell = "+27646282282";
         login instance = new login();
         boolean expResult = true;
@@ -68,4 +68,37 @@ public class TestTest {
         assertEquals(expResult, result);
     }
     
+    @Test
+    public void testcheckCellPhoneNumberInvalid(){
+        System.out.println("checkPhoneNumber - incorrectly formatted");
+        String cell = "646282282";
+        login instance = new login();
+        boolean expResult = false;
+        boolean result = instance.checkPhoneNumber(cell);
+        assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testloginUserValid(){
+        System.out.println("loginUser - successful");
+        login instance = new login();
+        instance.registerUser("Uh_1", "Uh@1234ma!", "+27646282282");
+        boolean expResult = true;
+        boolean result = instance.loginUser("Uh_1", "Uh@1234ma!" );
+        assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testreturnLoginStatus(){
+        System.out.println("returnLoginStatus - check");
+        login instance = new login();
+        instance.registerUser("Uh_1", "Uh@1234ma!", "+27646282282");
+        instance.loginUser("Uh_1","Uh@1234ma!" );
+        boolean result = instance.returnloginStatus("Uh_1", "Uh@1234ma!" );
+        assertTrue(return.contains("Welcome"));
+    }    
+
+    private void contains(String welcome) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
