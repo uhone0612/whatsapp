@@ -15,7 +15,7 @@ class login {
     private String cellphonenumber;
     
 
-    public Test(username, String password, String cellphonenumber){
+    public login(String username, String password, String cellphonenumber){
         this.username = username;
         this.password = password;
         this.cellphonenumber = cellphonenumber;
@@ -84,6 +84,14 @@ class login {
     }
 
     boolean checkUserName(String username) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    boolean checkPasswordComplexity(String password) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    boolean checkPhoneNumber(String cell) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

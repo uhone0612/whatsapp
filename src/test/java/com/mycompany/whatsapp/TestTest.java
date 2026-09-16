@@ -48,4 +48,24 @@ public class TestTest {
         assertEquals(expResult, result);
     }
     
+    @Test
+    public void testcheckPasswordComplexityInvalid(){
+        System.out.println("checkPasswordComplexity - incorrectly formatted");
+        String password = "password";
+        login instance = new login();
+        boolean expResult = false;
+        boolean result = instance.checkPasswordComplexity(password);
+        assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testcheckCellPhoneNumberValid(){
+        System.out.println("checkPhoneNumber - incorrectly formatted");
+        String cell = "+27646282282";
+        login instance = new login();
+        boolean expResult = true;
+        boolean result = instance.checkPhoneNumber(cell);
+        assertEquals(expResult, result);
+    }
+    
 }
