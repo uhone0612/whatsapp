@@ -14,10 +14,27 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestTest {
     
     public TestTest() {
-    }
-
+    }  
+ //1. username is good it has _ and <=5 chars
     @Test
-    public void testSomeMethod() {
+    public void testcheckUserNameValid() {
+        System.out.println("checkUserName - correctly formatted");
+        String username = "Uh_1";
+        login instance = new login();
+        boolean expResult = true;
+        boolean result = instance.checkUserName(username);
+        assertEquals(expResult, result);
+    }
+    
+    //2. username is not good it has no underscore
+    @Test
+    public void testcheckUserNameInvalid(){
+        System.out.println("checkUserName - incorrectly formatted");
+        String username = "Uho111";
+        login instance = new login();
+        boolean expResult = false;
+        boolean result = instance.checkUserName(username);
+        assertEquals(expResult, result);
     }
     
 }
