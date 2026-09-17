@@ -53,12 +53,12 @@ public class loginTestTest {
     @Test
     public void testCheckCellPhoneNumber() {
         System.out.println("checkCellPhoneNumber");
-        loginTest instance = null;
+        String cell = "+27646282282";
+        loginTest instance = new loginTest("+27646282282","","");
         boolean expResult = false;
         boolean result = instance.checkCellPhoneNumber();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
