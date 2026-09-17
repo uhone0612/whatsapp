@@ -8,14 +8,13 @@ package com.mycompany.whatsapp;
  *
  * @author Student
  */
-class Test {
-    
-    private String username;
+public class loginTest {
+     private String username;
     private String password;
     private String cellphonenumber;
     
 
-    public Test(String username, String password, String cellphonenumber) {
+    public loginTest(String username, String password, String cellphonenumber) {
         this.username = username;
         this.password = password;
         this.cellphonenumber = cellphonenumber;
@@ -79,10 +78,5 @@ class Test {
         }
     }
 
-}
-
-
     
-
-
-
+}

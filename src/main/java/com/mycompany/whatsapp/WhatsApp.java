@@ -30,7 +30,7 @@ public class WhatsApp {
         System.out.println("enter last name: ");
         String lastname = input.nextLine();
         
-        Test user = new Test(username, password, cellphonenumber);
+        loginTest user = new loginTest(username, password, cellphonenumber);
         
             String registrationmessage = user.registerUser();
         System.out.println(registrationmessage);
