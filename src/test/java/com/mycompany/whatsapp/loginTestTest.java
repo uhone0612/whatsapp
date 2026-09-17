@@ -81,14 +81,13 @@ public class loginTestTest {
     @Test
     public void testLoginUser() {
         System.out.println("loginUser");
-        String enteredUsername = "";
-        String enteredPassword = "";
-        loginTest instance = null;
-        boolean expResult = false;
+        String enteredUsername = "Uh_1";
+        String enteredPassword = "Uh@1234ma!";
+        loginTest instance = new loginTest("Uh_1","Uh@1234ma!","");
+        boolean expResult = true;
         boolean result = instance.loginUser(enteredUsername, enteredPassword);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       
     }
 
     /**
@@ -97,11 +96,11 @@ public class loginTestTest {
     @Test
     public void testReturnLoginStatus() {
         System.out.println("returnLoginStatus");
-        boolean loginStatus = false;
-        String firstName = "";
-        String lastName = "";
-        loginTest instance = null;
-        String expResult = "";
+        boolean loginStatus = true;
+        String firstName = "uhone";
+        String lastName = "mathoma";
+        loginTest instance = new loginTest("uhone","mathoma","" );
+        String expResult = "Welcome uhone, mathoma it is great to see you again.";
         String result = instance.returnLoginStatus(loginStatus, firstName, lastName);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
