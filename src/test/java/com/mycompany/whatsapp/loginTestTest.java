@@ -71,7 +71,7 @@ public class loginTestTest {
      * Test of checkCellPhoneNumber method, of class loginTest.
      */
     @Test
-    public void testCheckCellPhoneNumber() {
+    public void testCheckCellPhoneNumberValid() {
         System.out.println("checkCellPhoneNumber");
         String cell = "+27646282282";
         loginTest instance = new loginTest("+27646282282","","");
@@ -80,26 +80,53 @@ public class loginTestTest {
         assertEquals(expResult, result);
         
     }
-
+    
+    @Test
+    public void testCheckCellPhoneNumberInvalid() {
+        System.out.println("checkCellPhoneNumber");
+        String cell = "646282282";
+        loginTest instance = new loginTest("646282282","","");
+        boolean expResult = false;
+        boolean result = instance.checkCellPhoneNumber();
+        assertEquals(expResult, result);
+    }
     /**
      * Test of registerUser method, of class loginTest.
      */
     @Test
-    public void testRegisterUser() {
-        System.out.println("registerUser");
-        loginTest instance = null;
-        String expResult = "";
+    public void testRegisterUsercheckUserName() {
+        System.out.println("checkUserName");
+        loginTest instance = new loginTest("Uho111","","");
+        String expResult = "Username is not correctly formatted; please ensure that your username contains an underscore and is no more than five characters in length.";
         String result = instance.registerUser();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
+    
+    @Test
+    public void testRegisterUsercheckPasswordComplexity() {
+        System.out.println("checkPasswordComplexity");
+        loginTest instance = new loginTest("password","","");
+        String expResult = "Password is not correctly formatted; please ensure that the password contains at least eight characters, a capital letter, a number, and a special character.";
+        String result = instance.registerUser();
+        assertEquals(expResult, result);
+        
+    }
+    
+    @Test
+    public void testRegisterUsercheckPhoneNumber() {
+        System.out.println("checkPhoneNumber");
+        loginTest instance = new loginTest("646282282","","");
+        String expResult = "Cell phone number incorrectly formatted or does not contain an international code; please correct the number and try again.";
+        String result = instance.registerUser();
+        assertEquals(expResult, result);
+    }    
 
     /**
      * Test of loginUser method, of class loginTest.
      */
     @Test
-    public void testLoginUser() {
+    public void testLoginUserValid() {
         System.out.println("loginUser");
         String enteredUsername = "Uh_1";
         String enteredPassword = "Uh@1234ma!";
