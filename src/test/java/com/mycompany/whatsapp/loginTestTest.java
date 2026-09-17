@@ -96,7 +96,7 @@ public class loginTestTest {
     @Test
     public void testRegisterUsercheckUserName() {
         System.out.println("checkUserName");
-        loginTest instance = new loginTest("Uho111","","");
+        loginTest instance = new loginTest("Uhoooo2oo2","Uh@1234ma!","+27646282282"); //bad username
         String expResult = "Username is not correctly formatted; please ensure that your username contains an underscore and is no more than five characters in length.";
         String result = instance.registerUser();
         assertEquals(expResult, result);
@@ -106,7 +106,7 @@ public class loginTestTest {
     @Test
     public void testRegisterUsercheckPasswordComplexity() {
         System.out.println("checkPasswordComplexity");
-        loginTest instance = new loginTest("password","","");
+        loginTest instance = new loginTest("Uhl_1","password","+27646282282"); //valid username + bad password
         String expResult = "Password is not correctly formatted; please ensure that the password contains at least eight characters, a capital letter, a number, and a special character.";
         String result = instance.registerUser();
         assertEquals(expResult, result);
@@ -116,7 +116,7 @@ public class loginTestTest {
     @Test
     public void testRegisterUsercheckPhoneNumber() {
         System.out.println("checkPhoneNumber");
-        loginTest instance = new loginTest("646282282","","");
+        loginTest instance = new loginTest("Uh_1","Uh@1234ma!","646282282"); // valid username + valid password + bad PhoneNumber
         String expResult = "Cell phone number incorrectly formatted or does not contain an international code; please correct the number and try again.";
         String result = instance.registerUser();
         assertEquals(expResult, result);
