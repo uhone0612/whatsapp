@@ -25,10 +25,19 @@ public class loginTestTest {
      * Test of checkUserName method, of class loginTest.
      */
     @Test
-    public void testCheckUserName() {
-        System.out.println("checkUserName");
+    public void testCheckUserNameValid() {
+        System.out.println("checkUserName - correctly formatted");
         loginTest instance = new loginTest("Uh_1","","");
         boolean expResult = true;
+        boolean result = instance.checkUserName();
+        assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testCheckUserNameInvalid() {
+        System.out.println("checkUserName - incorrectly formatted");
+        loginTest instance = new loginTest("Uho111","","");
+        boolean expResult = false;
         boolean result = instance.checkUserName();
         assertEquals(expResult, result);
     }
@@ -37,10 +46,21 @@ public class loginTestTest {
      * Test of checkPasswordComplexity method, of class loginTest.
      */
     @Test
-    public void testCheckPasswordComplexity() {
-        System.out.println("checkPasswordComplexity");
+    public void testCheckPasswordComplexityValid() {
+        System.out.println("checkPasswordComplexity - correctly formatted");
         String password = "Uh@1234ma!";
         loginTest instance = new loginTest("Uh@1234ma!","","");
+        boolean expResult = true;
+        boolean result = instance.checkPasswordComplexity();
+        assertEquals(expResult, result);
+        
+    }
+    
+    @Test
+    public void testCheckPasswordComplexityInvalid() {
+        System.out.println("checkPasswordComplexity - incorrectly formatted");
+        String password = "password";
+        loginTest instance = new loginTest("password","","");
         boolean expResult = true;
         boolean result = instance.checkPasswordComplexity();
         assertEquals(expResult, result);
@@ -103,8 +123,7 @@ public class loginTestTest {
         String expResult = "Welcome uhone, mathoma it is great to see you again.";
         String result = instance.returnLoginStatus(loginStatus, firstName, lastName);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+     
     }
     
 }
