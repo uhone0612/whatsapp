@@ -14,7 +14,7 @@ public class WhatsApp {
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        
+        //registration
         System.out.println("enter username: ");
         String username = input.nextLine();
         
@@ -34,7 +34,7 @@ public class WhatsApp {
         
             String registrationmessage = user.registerUser();
         System.out.println(registrationmessage);
-        
+        //login
         if (registrationmessage.equals("user has been registered successfully.")){
             System.out.println("enter username to login: ");
             String enteredusername = input.nextLine();
