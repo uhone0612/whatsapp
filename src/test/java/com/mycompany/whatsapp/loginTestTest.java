@@ -27,7 +27,7 @@ public class loginTestTest {
     @Test
     public void testCheckUserNameValid() {
         System.out.println("checkUserName - correctly formatted");
-        loginTest instance = new loginTest("Uh_1","","");
+        loginTest instance = new loginTest("Kyl_1","","");
         boolean expResult = true;
         boolean result = instance.checkUserName();
         assertEquals(expResult, result);
@@ -36,7 +36,7 @@ public class loginTestTest {
     @Test
     public void testCheckUserNameInvalid() {
         System.out.println("checkUserName - incorrectly formatted");
-        loginTest instance = new loginTest("Uho111","","");
+        loginTest instance = new loginTest("kyle!!!!!","","");
         boolean expResult = false;
         boolean result = instance.checkUserName();
         assertEquals(expResult, result);
@@ -48,8 +48,8 @@ public class loginTestTest {
     @Test
     public void testCheckPasswordComplexityValid() {
         System.out.println("checkPasswordComplexity - correctly formatted");
-        String password = "Uh@1234ma!";
-        loginTest instance = new loginTest("Uh@1234ma!","","");
+        String password = "Ch&&sec@ke99!";
+        loginTest instance = new loginTest("Ch&&sec@ke99!","","");
         boolean expResult = true;
         boolean result = instance.checkPasswordComplexity();
         assertEquals(expResult, result);
@@ -73,8 +73,8 @@ public class loginTestTest {
     @Test
     public void testCheckCellPhoneNumberValid() {
         System.out.println("checkCellPhoneNumber");
-        String cell = "+27646282282";
-        loginTest instance = new loginTest("+27646282282","","");
+        String cell = "+27838968976";
+        loginTest instance = new loginTest("+27838968976","","");
         boolean expResult = false;
         boolean result = instance.checkCellPhoneNumber();
         assertEquals(expResult, result);
@@ -84,8 +84,8 @@ public class loginTestTest {
     @Test
     public void testCheckCellPhoneNumberInvalid() {
         System.out.println("checkCellPhoneNumber");
-        String cell = "646282282";
-        loginTest instance = new loginTest("646282282","","");
+        String cell = "08966553";
+        loginTest instance = new loginTest("08966553","","");
         boolean expResult = false;
         boolean result = instance.checkCellPhoneNumber();
         assertEquals(expResult, result);
