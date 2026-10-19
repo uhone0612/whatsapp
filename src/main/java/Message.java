@@ -3,6 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.security.SecureRandom;
+import java.util.regex.Pattern;
 /**
  *
  * @author Student
@@ -109,6 +114,19 @@ class Message {
         } catch (IOException e) {
             System.out.println("Could not write JSON file: " + e.getMessage());
         }
+    }
+    private static String escape(String s) {
+        return s.replace("\\", "\\\\").replace("\"", "\\\"");
+    }
+
+    public String getMessageHash() { return messageHash; }
+    public String getMessageID() { return messageID; }
+
+    /** Used by unit tests to start from a clean state. */
+    public static void resetState() {
+        totalSent = 0;
+        sentLog.setLength(0);
+        storedJson.setLength(0);
     }
 
     

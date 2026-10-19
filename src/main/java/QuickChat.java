@@ -46,6 +46,14 @@ public class QuickChat {
             }
         }
     }
+
+    private static void handleMessage(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private static int readInt(String choose_an_option_, int i, int i0) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
      private static class Login {
 
         public Login() {
@@ -142,6 +150,10 @@ public class QuickChat {
                     + (max == Integer.MAX_VALUE ? "a larger value" : String.valueOf(max)) + ".");
         }
     }
+
+        private Login(String first, String last) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
 
     
 }
