@@ -93,7 +93,23 @@ class Message {
     public static int returnTotalMessages() {
         return totalSent;
     }
-
+    
+     /** Appends this message to messages.json (hand-built JSON, no library needed).
+     *  Reference: Oracle (2024) Files.writeString, Java SE API docs - add full Harvard reference. */
+    public void storeMessage() {
+        if (storedJson.length() > 0) {
+            storedJson.append(",\n");
+        }
+        storedJson.append("  {\"messageID\":\"").append(messageID)
+                .append("\",\"messageHash\":\"").append(messageHash)
+                .append("\",\"recipient\":\"").append(recipient)
+                .append("\",\"message\":\"").append(escape(text)).append("\"}");
+        try {
+            Files.writeString(Path.of(JSON_FILE), "[\n" + storedJson + "\n]\n");
+        } catch (IOException e) {
+            System.out.println("Could not write JSON file: " + e.getMessage());
+        }
+    }
 
     
 }
