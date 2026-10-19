@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author Student
+ * @author uhone
  */
 public class QuickChat {
     private static final Scanner input = new Scanner(System.in);

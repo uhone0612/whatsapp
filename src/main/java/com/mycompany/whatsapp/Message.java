@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 /**
  *
- * @author Student
+ * @author uhone
  */
 class Message {
      private static final String JSON_FILE = "messages.json";
