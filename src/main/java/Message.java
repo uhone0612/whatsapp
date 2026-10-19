@@ -29,6 +29,71 @@ class Message {
         this.text = text;
         this.messageHash = createMessageHash();
     }
+    /** Creates a random ten-digit ID (leading zeros allowed). */
+    public static String generateMessageID() {
+        long value = Math.floorMod(RANDOM.nextLong(), 10_000_000_000L);
+        return String.format("%010d", value);
+    }
+    public boolean checkMessageID() {
+        return messageID != null && messageID.length() <= 10;
+    }
+
+    public String checkRecipientCell() {
+        if (Pattern.matches("^\\+\\d{1,3}\\d{1,10}$", recipient)) {
+            return "Cell phone number successfully captured.";
+        }
+        return "Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.";
+    }
+    public static String checkMessageLength(String message) {
+        if (message.length() <= 250) {
+            return "Message ready to send.";
+        }
+        int over = message.length() - 250;
+        return "Message exceeds 250 characters by " + over + "; please reduce the size.";
+    }
+
+    /** Format: first two ID digits : message number : FIRSTWORD + LASTWORD (caps). */
+    public String createMessageHash() {
+        String trimmed = text.trim();
+        int firstSpace = trimmed.indexOf(' ');
+        int lastSpace = trimmed.lastIndexOf(' ');
+        String first = (firstSpace == -1) ? trimmed : trimmed.substring(0, firstSpace);
+        String last = (lastSpace == -1) ? trimmed : trimmed.substring(lastSpace + 1);
+        first = first.replaceAll("[^A-Za-z0-9]", "");
+        last = last.replaceAll("[^A-Za-z0-9]", "");
+        return (messageID.substring(0, 2) + ":" + messageNumber + ":" + first + last).toUpperCase();
+    }
+    
+     /** 1 = send, 2 = disregard, 3 = store. */
+    public String sentMessage(int choice) {
+        switch (choice) {
+            case 1:
+                totalSent++;
+                sentLog.append(printDetails()).append("\n");
+                return "Message successfully sent.";
+            case 2:
+                return "Press 0 to delete the message.";
+            case 3:
+                storeMessage();
+                return "Message successfully stored.";
+            default:
+                return "Invalid option.";
+        }
+    }
+    
+    public String printDetails() {
+        return "Message ID: " + messageID + "\nMessage Hash: " + messageHash
+                + "\nRecipient: " + recipient + "\nMessage: " + text + "\n";
+    }
+
+    public static String printMessages() {
+        return sentLog.toString();
+    }
+
+    public static int returnTotalMessages() {
+        return totalSent;
+    }
+
 
     
 }
