@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
- * @author Student
+ * @author uhone
  */
 public class loginTEST {
     private static final String TEXT1 = "Hi Mike, can you join us for dinner tonight?";

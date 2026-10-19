@@ -36,7 +36,7 @@ public class QuickChat {
             user = new loginTest(username, password, cellphonenumber);
             registrationmessage = user.registerUser();
             System.out.println(registrationmessage);
-        } while (!registrationmessage.equals("User has been registered successfully."));
+        } while (!(user.checkUserName() && user.checkPasswordComplexity() && user.checkCellPhoneNumber()));
 
         // ---------- login (Part 1) - messages only after a successful login ----------
         boolean loggedIn = false;
