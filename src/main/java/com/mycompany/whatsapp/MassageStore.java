@@ -14,4 +14,14 @@ public class MassageStore {
     public static final String STORED = "Stored";
     public static final String DISREGARD = "Disregard";
     
+     private final String[] sentMessages = new String[MAX_MESSAGES];
+    private final String[] disregardedMessages = new String[MAX_MESSAGES];
+    private final String[] storedMessages = new String[MAX_MESSAGES];
+    private final String[] messageHashes = new String[MAX_MESSAGES];
+    private final String[] messageIDs = new String[MAX_MESSAGES];
+    
+    private final String[] messageRecipients = new String[MAX_MESSAGES];
+    private final String[] messageTexts = new String[MAX_MESSAGES];
+    private final String[] messageFlags = new String[MAX_MESSAGES];
+    
 }
