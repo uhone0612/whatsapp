@@ -63,4 +63,15 @@ public class MassageStore {
         }
         return true;
     }
+     
+    
+    // Reading the arrays
+    
+
+    public String[] getSentMessages() { return Arrays.copyOf(sentMessages, sentCount); }
+    public String[] getDisregardedMessages() { return Arrays.copyOf(disregardedMessages, disregardedCount); }
+    public String[] getStoredMessages() { return Arrays.copyOf(storedMessages, storedCount); }
+    public String[] getMessageHashes() { return Arrays.copyOf(messageHashes, totalCount); }
+    public String[] getMessageIDs() { return Arrays.copyOf(messageIDs, totalCount); }
+    public int getStoredCount() { return storedCount; }
 }
