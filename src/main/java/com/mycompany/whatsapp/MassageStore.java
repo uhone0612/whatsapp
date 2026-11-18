@@ -24,4 +24,18 @@ public class MassageStore {
     private final String[] messageTexts = new String[MAX_MESSAGES];
     private final String[] messageFlags = new String[MAX_MESSAGES];
     
+    private int sentCount = 0;
+    private int disregardedCount = 0;
+    private int storedCount = 0;
+    private int totalCount = 0;
+    
+     // ------------------------------------------------------------------
+    // Adding messages
+    // ------------------------------------------------------------------
+
+    /** Adds a message to the correct arrays. Returns false if the arrays are full. */
+    public boolean addMessage(Message msg, String flag) {
+        return addEntry(msg.getMessageID(), msg.getMessageHash(),
+                msg.getRecipient(), msg.getMessageText(), flag);
+    }
 }
