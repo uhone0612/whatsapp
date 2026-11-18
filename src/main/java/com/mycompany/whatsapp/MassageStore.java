@@ -29,13 +29,38 @@ public class MassageStore {
     private int storedCount = 0;
     private int totalCount = 0;
     
-     // ------------------------------------------------------------------
+    
     // Adding messages
-    // ------------------------------------------------------------------
+    
 
     /** Adds a message to the correct arrays. Returns false if the arrays are full. */
     public boolean addMessage(Message msg, String flag) {
         return addEntry(msg.getMessageID(), msg.getMessageHash(),
                 msg.getRecipient(), msg.getMessageText(), flag);
+    }
+    
+     public boolean addMessage(String id, int number, String recipient, String text, String flag) {
+        return addMessage(new Message(id, number, recipient, text), flag);
+    }
+     
+     private boolean addEntry(String id, String hash, String recipient, String text, String flag) {
+        if (totalCount >= MAX_MESSAGES) {
+            return false;
+        }
+        messageIDs[totalCount] = id;
+        messageHashes[totalCount] = hash;
+        messageRecipients[totalCount] = recipient;
+        messageTexts[totalCount] = text;
+        messageFlags[totalCount] = flag;
+        totalCount++;
+
+        if (flag.equals(SENT)) {
+            sentMessages[sentCount++] = text;
+        } else if (flag.equals(STORED)) {
+            storedMessages[storedCount++] = text;
+        } else {
+            disregardedMessages[disregardedCount++] = text;
+        }
+        return true;
     }
 }
