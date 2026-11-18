@@ -15,13 +15,23 @@ import java.util.regex.Pattern;
  * @author uhone
  */
 class Message {
-     private static final String JSON_FILE = "messages.json";
+     static final String JSON_FILE = "messages.json";
     private static final SecureRandom RANDOM = new SecureRandom();
 
     // Running state for the life of the program
     private static int totalSent = 0;
     private static final StringBuilder sentLog = new StringBuilder();
     private static final StringBuilder storedJson = new StringBuilder();
+
+    static AbstractStringBuilder toJsonObject(String messageID, String messageHashe, String messageRecipient, String messageText) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    static void writeJsonFile(String toString) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+   
     private final String messageID;
     private final int messageNumber;
     private final String recipient;

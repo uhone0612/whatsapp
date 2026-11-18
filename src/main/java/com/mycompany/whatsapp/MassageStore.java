@@ -4,6 +4,12 @@
  */
 package com.mycompany.whatsapp;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  *
  * @author Student
@@ -165,6 +171,156 @@ public class MassageStore {
         if (index == -1) {
             return "Message hash not found.";
         }
+        
+         String text = messageTexts[index];
+        String flag = messageFlags[index];
 
-     
+        // remove from the category array
+        if (flag.equals(SENT)) {
+            sentCount = removeText(sentMessages, sentCount, text);
+        } else if (flag.equals(STORED)) {
+            storedCount = removeText(storedMessages, storedCount, text);
+        } else {
+            disregardedCount = removeText(disregardedMessages, disregardedCount, text);
+        }
+
+        // remove from the parallel arrays
+        shiftLeft(messageIDs, totalCount, index);
+        shiftLeft(messageHashes, totalCount, index);
+        shiftLeft(messageRecipients, totalCount, index);
+        shiftLeft(messageTexts, totalCount, index);
+        shiftLeft(messageFlags, totalCount, index);
+        totalCount--;
+
+      if (flag.equals(STORED)) {
+            saveStoredToJson();
+        }
+        return "Message: \"" + text + "\" successfully deleted.";
+    }
+
+    /** f) Report of all stored messages (full details). */
+    public String displayStoredReport() {
+        return buildReport(STORED, "STORED MESSAGES REPORT");
+    }
+
+    /** Report of all sent messages: ID, hash, recipient and message. */
+    public String displayReport() {
+        return buildReport(SENT, "SENT MESSAGES REPORT");
+    }
+    
+    private String buildReport(String flag, String title) {
+        StringBuilder sb = new StringBuilder("===== " + title + " =====\n");
+        int number = 0;
+        for (int i = 0; i < totalCount; i++) {
+            if (messageFlags[i].equals(flag)) {
+                number++;
+                sb.append("\nMessage ").append(number).append("\n")
+                  .append("Message ID: ").append(messageIDs[i]).append("\n")
+                  .append("Message Hash: ").append(messageHashes[i]).append("\n")
+                  .append("Recipient: ").append(messageRecipients[i]).append("\n")
+                  .append("Message: ").append(messageTexts[i]).append("\n");
+            }
+        }
+        if (number == 0) {
+            sb.append("\nNo messages.\n");
+        }
+        return sb.toString();
+    }
+    
+    public int loadStoredFromJson() {
+        Path path = Path.of(Message.JSON_FILE);
+        if (!Files.exists(path)) {
+            return 0;
+        }
+        int loaded = 0;
+        try {
+            List<String> lines = Files.readAllLines(path);
+            for (String line : lines) {
+                if (!line.contains("\"messageID\"")) {
+                    continue;
+                }
+                String id = extractField(line, "messageID");
+                if (containsID(id)) {
+                    continue; // already loaded
+                }
+                if (addEntry(id, extractField(line, "messageHash"),
+                        extractField(line, "recipient"), extractField(line, "message"), STORED)) {
+                    loaded++;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Could not read JSON file: " + e.getMessage());
+        }
+        return loaded;
+    }
+    
+    /** Rewrites messages.json from the stored messages (used after a delete). */
+    public void saveStoredToJson() {
+        StringBuilder body = new StringBuilder();
+        for (int i = 0; i < totalCount; i++) {
+            if (messageFlags[i].equals(STORED)) {
+                if (body.length() > 0) {
+                    body.append(",\n");
+                }
+                body.append(Message.toJsonObject(messageIDs[i], messageHashes[i],
+                        messageRecipients[i], messageTexts[i]));
+            }
+        }
+        Message.writeJsonFile(body.toString());
+    }
+    
+    /** Pulls the value of "key":"value" out of one JSON line (handles \" and \\). */
+    private static String extractField(String line, String key) {
+        String marker = "\"" + key + "\":\"";
+        int start = line.indexOf(marker);
+        if (start == -1) {
+            return "";
+        }
+        start += marker.length();
+        StringBuilder value = new StringBuilder();
+        for (int i = start; i < line.length(); i++) {
+            char c = line.charAt(i);
+            if (c == '\\' && i + 1 < line.length()) {
+                value.append(line.charAt(i + 1));
+                i++;
+            } else if (c == '"') {
+                break;
+            } else {
+                value.append(c);
+            }
+        }
+        return value.toString();
+    }
+    
+     private boolean containsID(String id) {
+        for (int i = 0; i < totalCount; i++) {
+            if (messageIDs[i].equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    
+    // Array helpers
+    
+
+    /** Removes the first element equal to text; returns the new count. */
+    private static int removeText(String[] array, int count, String text) {
+        for (int i = 0; i < count; i++) {
+            if (array[i].equals(text)) {
+                shiftLeft(array, count, i);
+                return count - 1;
+            }
+        }
+        return count;
+    }
+    
+     /** Moves everything after index one place left and clears the last slot. */
+    private static void shiftLeft(String[] array, int count, int index) {
+        for (int i = index; i < count - 1; i++) {
+            array[i] = array[i + 1];
+        }
+        array[count - 1] = null;
+    }
 }
