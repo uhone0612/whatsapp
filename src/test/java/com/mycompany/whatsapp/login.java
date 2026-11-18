@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author uhone
  */
-public class loginTEST {
+public class login {
     private static final String TEXT1 = "Hi Mike, can you join us for dinner tonight?";
     private static final String TEXT2 = "Hi Keegan, did you receive the payment?";
 
