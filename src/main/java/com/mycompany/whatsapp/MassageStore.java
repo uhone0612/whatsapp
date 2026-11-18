@@ -74,4 +74,18 @@ public class MassageStore {
     public String[] getMessageHashes() { return Arrays.copyOf(messageHashes, totalCount); }
     public String[] getMessageIDs() { return Arrays.copyOf(messageIDs, totalCount); }
     public int getStoredCount() { return storedCount; }
+    
+     public String displayStoredSendersAndRecipients(String sender) {
+        if (storedCount == 0) {
+            return "No stored messages.";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < totalCount; i++) {
+            if (messageFlags[i].equals(STORED)) {
+                sb.append("Sender: ").append(sender)
+                  .append(" | Recipient: ").append(messageRecipients[i]).append("\n");
+            }
+        }
+        return sb.toString();
+    }
 }
