@@ -14,8 +14,9 @@ import java.util.List;
  *
  * @author Student
  */
-public class MassageStore {
-     public static final int MAX_MESSAGES = 100;
+class MessageStore {
+    
+    public static final int MAX_MESSAGES = 100;
     public static final String SENT = "Sent";
     public static final String STORED = "Stored";
     public static final String DISREGARD = "Disregard";
@@ -324,3 +325,5 @@ public class MassageStore {
         array[count - 1] = null;
     }
 }
+    
+

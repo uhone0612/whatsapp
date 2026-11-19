@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.whatsapp;
 
 import java.io.IOException;
@@ -11,27 +7,17 @@ import java.security.SecureRandom;
 import java.util.regex.Pattern;
 
 /**
- *
- * @author uhone
+ * A single chat message plus running totals and JSON helpers.
+ * @author Student
  */
-class Message {
-     static final String JSON_FILE = "messages.json";
+public class Message {
+    public static final String JSON_FILE = "messages.json";
     private static final SecureRandom RANDOM = new SecureRandom();
 
     // Running state for the life of the program
     private static int totalSent = 0;
     private static final StringBuilder sentLog = new StringBuilder();
-    private static final StringBuilder storedJson = new StringBuilder();
 
-    static AbstractStringBuilder toJsonObject(String messageID, String messageHashe, String messageRecipient, String messageText) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    static void writeJsonFile(String toString) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-   
     private final String messageID;
     private final int messageNumber;
     private final String recipient;
@@ -45,6 +31,7 @@ class Message {
         this.text = text;
         this.messageHash = createMessageHash();
     }
+
     /** Creates a random ten-digit ID (leading zeros allowed). */
     public static String generateMessageID() {
         long value = Math.floorMod(RANDOM.nextLong(), 10_000_000_000L);
@@ -70,6 +57,7 @@ class Message {
         int over = message.length() - 250;
         return "Message exceeds 250 characters by " + over + "; please reduce the size.";
     }
+
     /** Format: first two ID digits : message number : FIRSTWORD + LASTWORD (caps). */
     public String createMessageHash() {
         String trimmed = text.trim();
@@ -81,6 +69,7 @@ class Message {
         last = last.replaceAll("[^A-Za-z0-9]", "");
         return (messageID.substring(0, 2) + ":" + messageNumber + ":" + first + last).toUpperCase();
     }
+
     /** 1 = send, 2 = disregard, 3 = store. */
     public String sentMessage(int choice) {
         switch (choice) {
@@ -97,7 +86,8 @@ class Message {
                 return "Invalid option.";
         }
     }
-     /** Details in the required order: ID, Hash, Recipient, Message. */
+
+    /** Details in the required order: ID, Hash, Recipient, Message. */
     public String printDetails() {
         return "Message ID: " + messageID + "\nMessage Hash: " + messageHash
                 + "\nRecipient: " + recipient + "\nMessage: " + text + "\n";
@@ -110,31 +100,69 @@ class Message {
     public static int returnTotalMessages() {
         return totalSent;
     }
+
+    // ------------------------------------------------------------------
+    // JSON storage (hand-built JSON, no library needed)
+    // Reference: Oracle (2024) Files.readString / Files.writeString, Java SE API docs
+    // TODO: add the full Harvard reference for the sources you used.
+    // ------------------------------------------------------------------
+
+    /** Adds this message to the JSON array in messages.json (keeps earlier messages). */
     public void storeMessage() {
-        if (storedJson.length() > 0) {
-            storedJson.append(",\n");
-        }
-        storedJson.append("  {\"messageID\":\"").append(messageID)
-                .append("\",\"messageHash\":\"").append(messageHash)
-                .append("\",\"recipient\":\"").append(recipient)
-                .append("\",\"message\":\"").append(escape(text)).append("\"}");
+        String existing = readJsonBody();
+        String object = toJsonObject(messageID, messageHash, recipient, text);
+        String body = existing.isEmpty() ? object : existing + ",\n" + object;
+        writeJsonFile(body);
+    }
+
+    /** One JSON object on a single line. */
+    public static String toJsonObject(String id, String hash, String recipient, String message) {
+        return "  {\"messageID\":\"" + escape(id)
+                + "\",\"messageHash\":\"" + escape(hash)
+                + "\",\"recipient\":\"" + escape(recipient)
+                + "\",\"message\":\"" + escape(message) + "\"}";
+    }
+
+    /** Everything between the outer [ ] of the JSON file, or "" if there is nothing. */
+    private static String readJsonBody() {
         try {
-            Files.writeString(Path.of(JSON_FILE), "[\n" + storedJson + "\n]\n");
+            Path path = Path.of(JSON_FILE);
+            if (!Files.exists(path)) {
+                return "";
+            }
+            String content = Files.readString(path).trim();
+            if (content.length() < 2) {
+                return "";
+            }
+            return content.substring(1, content.length() - 1).trim();
+        } catch (IOException e) {
+            System.out.println("Could not read JSON file: " + e.getMessage());
+            return "";
+        }
+    }
+
+    /** Writes the given objects (already comma separated) as a JSON array. */
+    public static void writeJsonFile(String body) {
+        try {
+            String content = body.isEmpty() ? "[]\n" : "[\n" + body + "\n]\n";
+            Files.writeString(Path.of(JSON_FILE), content);
         } catch (IOException e) {
             System.out.println("Could not write JSON file: " + e.getMessage());
         }
     }
+
     private static String escape(String s) {
         return s.replace("\\", "\\\\").replace("\"", "\\\"");
     }
 
     public String getMessageHash() { return messageHash; }
     public String getMessageID() { return messageID; }
+    public String getRecipient() { return recipient; }
+    public String getMessageText() { return text; }
 
     /** Used by unit tests to start from a clean state. */
     public static void resetState() {
         totalSent = 0;
         sentLog.setLength(0);
-        storedJson.setLength(0);
     }
 }
